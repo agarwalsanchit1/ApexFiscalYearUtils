@@ -1,33 +1,27 @@
 public class FiscalYearUtils {
 	public static Integer getCurrentFiscalYear() {
-		return getFiscalYearForDate(System.today());
+		return getFiscalYear(System.today());
 	}
 
-	public static Integer getFiscalYearForDate(Date dt) {
+	public static Integer getFiscalYear(Date dt) {
 		if(dt == null) {
 			throw new DateException('Date is required');
 		}
 
-		Organization organization = [
-			SELECT FiscalYearStartMonth, UsesStartDateAsFiscalYearName
-			FROM Organization
-			WHERE id=:Userinfo.getOrganizationId()
-		];
-
 		Integer currentFY;
-		if (dt.month() >= organization.FiscalYearStartMonth) {
-			if (organization.UsesStartDateAsFiscalYearName) {
-				currentFY = dt.year();
-			} else {
-				currentFY = dt.year() + 1;
-			}
+		List<FiscalYearSettings> fiscalYearSettings = [
+			SELECT Id, Name, StartDate, EndDate, IsStandardYear, PeriodId, YearType
+			FROM FiscalYearSettings
+			WHERE StartDate <= TODAY 
+			AND EndDate >= TODAY
+		];
+		
+		if(fiscalYearSettings.isEmpty()) {
+			currentFY = System.today().year();		
 		} else {
-			if (organization.UsesStartDateAsFiscalYearName) {
-				currentFY = dt.year() - 1;
-			} else {
-				currentFY = dt.year();
-			}
+			currentFY = Integer.valueOf(fiscalYearSettings[0].Name);
 		}
+		
 		return currentFY;
 	}
 	
