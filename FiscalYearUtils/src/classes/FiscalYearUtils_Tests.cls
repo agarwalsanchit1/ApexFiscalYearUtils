@@ -22,14 +22,14 @@ private class FiscalYearUtils_Tests {
 			GROUP BY FISCAL_YEAR(CloseDate)
 		][0];
 
-		System.assertEquals(soqlFY.get('fy'), DateUtils.getCurrentFiscalYear());
-		System.assertEquals(soqlFY.get('fy'), DateUtils.getFiscalYearForDate(opportunity.CloseDate));
+		System.assertEquals(soqlFY.get('fy'), FiscalYearUtils.getCurrentFiscalYear());
+		System.assertEquals(soqlFY.get('fy'), FiscalYearUtils.getFiscalYearForDate(opportunity.CloseDate));
 	}
 
     @isTest
 	static void throwErrorForNullDateFiscalYear() {
 		try {
-			DateUtils.getFiscalYearForDate(null);
+			FiscalYearUtils.getFiscalYearForDate(null);
 			throw new ExpectedException('Exception expected');
 		} catch(Exception ex) {
 			System.assert(ex.getMessage().contains('Date is required'));
