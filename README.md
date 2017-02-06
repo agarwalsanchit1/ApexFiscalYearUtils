@@ -1,5 +1,5 @@
-# FiscalYearUtils
-<a href="https://githubsfdeploy.herokuapp.com?owner=jongpie&repo=FiscalYearUtils">
+# Apex Fiscal Year Utils
+<a href="https://githubsfdeploy.herokuapp.com?owner=jongpie&repo=ApexFiscalYearUtils">
   <img alt="Deploy to Salesforce"
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png">
 </a>
