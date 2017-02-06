@@ -1,24 +1,24 @@
 public class FiscalYearUtils {
+
     public static Integer getCurrentFiscalYear() {
         return getFiscalYear(System.today());
     }
 
-    public static Integer getFiscalYear(Date dt) {
+    public static Integer getFiscalYearForDate(Date dt) {
         if(dt == null) throw new DateException('Date is required');
 
-        Integer currentFY;
-        List<FiscalYearSettings> fiscalYearSettings = [
-            SELECT Id, Name, StartDate, EndDate, IsStandardYear, PeriodId, YearType
-            FROM FiscalYearSettings
-            WHERE StartDate <= TODAY
-            AND EndDate >= TODAY
-        ];
 
-        if(fiscalYearSettings.isEmpty()) currentFY = System.today().year();
-        else currentFY = Integer.valueOf(fiscalYearSettings[0].Name);
+        if(FISCAL_YEAR_SETTINGS.isEmpty()) System.today().year();
+        else return Integer.valueOf(FISCAL_YEAR_SETTINGS[0].Name);
+    }
 
-        return currentFY;
+    private static List<FiscalYearSettings> FISCAL_YEAR_SETTINGS {
+        get {
+            if(FISCAL_YEAR_SETTINGS == null) FISCAL_YEAR_SETTINGS = getFiscalYearSettings();
+            return FISCAL_YEAR_SETTINGS;
+        }
     }
 
     private class DateException extends Exception {}
+
 }
